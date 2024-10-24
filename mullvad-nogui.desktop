@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Mullvad NoGUI
+Exec=mullvad connect
+Terminal=false
+Type=Application
+Icon=mullvad-vpn
+Categories=Network;
