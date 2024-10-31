@@ -7,7 +7,7 @@ This applies for CentOS Bootc, RHEL Image mode and [HeliumOS](https://heliumos.o
 First add the repo file manually, then install it, which will result in a reboot.
 
 ```
-curl --tlsv1.3 -fsS https://repository.mullvad.net/rpm/stable/mullvad.repo | pkexec tee > /etc/yum.repos.d/mullvad.repo
+curl --tlsv1.3 -fsS https://repository.mullvad.net/rpm/stable/mullvad.repo | pkexec tee /etc/yum.repos.d/mullvad.repo
 
 # install it
 rpm-ostree update --install mullvad-vpn --reboot
