@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Mullvad Appstart
+Comment=Start apps only when MullvadVPN is connected
+Icon=show-grid-symbolic
+Exec=$HOME/.local/bin/mullvad/appstart

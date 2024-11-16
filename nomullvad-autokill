@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# VPN appchecker
+# kills dangerous apps if the VPN is not connected OR blocking the connection (device is offline)
+
+kill-apps() {
+    pkill -f qbittorrent
+    pkill -f nextcloud
+    pkill -f signal
+    pkill -f thunderbird
+    pkill -f torbrowser
+}
+
+run-apps() {
+    flatpak run --branch=stable --command=nextcloud com.nextcloud.desktopclient.nextcloud & disown
+    flatpak run --branch=stable --command=qbittorrent org.qbittorrent.qBittorrent & disown
+    flatpak run --branch=stable --command=signal-desktop org.signal.Signal & disown
+    torbrowser-launcher & disown
+}
+
+while true; do
+    if ! mullvad status | grep -qE "Connected|Blocked"; then
+        kill-apps
+        sleep 2
+        kill-apps
+        sleep 30
+        if mullvad-status | grep -qE "Connected|Blocked"; then
+            run-apps
+        fi
+    fi
+sleep 2
+done
+

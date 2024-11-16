@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# start an app only if mullvad is connected
+
+while ! mullvad status | grep -qE "Connected|Blocked"; do
+    sleep 10
+done
+
+flatpak run --branch=stable --command=qbittorrent org.qbittorrent.qBittorrent & disown
+flatpak run --branch=stable --command=nextcloud com.nextcloud.desktopclient.nextcloud & disown
