@@ -34,6 +34,49 @@ You can also add a GUI desktop entry to start it, if you want that for whatever 
 wget -O ~/.local/share/applications/ https://github.com/boredsquirrel/MullvadVPN-Tricks/raw/refs/heads/main/mullvad-nogui.desktop
 ```
 
+## Autostart apps only when the VPN is on
+
+If you want to start applications on boot, but it is **really, really bad** if they start with no VPN on (for example a Torrent program, not that we use it for anything illegal), you can use this script instead of launching the app manually:
+
+```
+mkdir ~/.local/bin
+wget https://github.com/boredsquirrel/MullvadVPN-Tricks/raw/refs/heads/main/mullvad-appstart -O ~/.local/bin/
+chmod +x ~/.local/bin/*
+```
+
+In KDE, you can already set that script to "autostart". On GNOME with GNOME-Tweaks, you may need a desktop entry, and you can also use that to start the app from the App List.
+
+```
+mkdir ~/.local/share/applications
+wget https://github.com/boredsquirrel/MullvadVPN-Tricks/raw/refs/heads/main/mullvad-appstart.desktop -O ~/.local/share/applications/
+update-desktop-database
+```
+
+Now you can select this "App" to autostart, and in the script you can enter the start commands of the apps you want to start, ***if*** the VPN is connected.
+
+## Kill Apps if VPN is off
+You may want to use an additional security to kill certain apps if the VPN is not connected or blocking the connection.
+
+Just in case your VPN may crash or whatever, you wouldn't want some traffic leaking from your real IP address.
+
+```
+mkdir ~/.local/bin
+wget https://github.com/boredsquirrel/MullvadVPN-Tricks/raw/refs/heads/main/nomullvad-autokill -O ~/.local/bin
+chmod +x ~/.local/bin/*
+```
+
+In the script you can enter what apps you would like to kill if the VPN is off, and what you would like to restart, once it is on again.
+
+Then you can also set this app as "autostart" in KDE, on GNOME with GNOME-Tweaks you may need another desktop entry.
+
+```
+mkdir ~/.local/share/applications
+wget https://github.com/boredsquirrel/MullvadVPN-Tricks/raw/refs/heads/main/nomullvad-appkill.desktop -O ~/.local/share/applications/
+update-desktop-database
+```
+
+You can set this to autostart in GNOME Tweaks.
+
 ## Excluding Apps
 To exclude an app from the VPN (aka. split tunnel), use `mullvad-exclude`.
 
