@@ -28,6 +28,9 @@ systemctl enable --now mullvad-daemon.service
 systemctl enable --now mullvad-early-boot-blocking.service
 ```
 
+> [!NOTE]
+> You can also install `mullvad-browser` after adding that repo.
+
 ## Automatic Starting without GUI
 If you want to setup automatic starting of the VPN **without launching the GUI app** all the time:
 
