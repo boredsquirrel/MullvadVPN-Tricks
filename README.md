@@ -1,13 +1,21 @@
-# MullvadVPN-Tricks
+<img src="https://mullvad.net/_app/immutable/assets/logo.Ba5MUFAA.svg" alt="mullvad logo" width="300"/> <img src="https://www.kernel.org/theme/images/logos/tux.png" alt="tux logo" width="80"/>
+
 Making MullvadVPN work better on GNU/Linux
 
 ## Install on Fedora Atomic Desktops
-This applies for CentOS Bootc, RHEL Image mode and [HeliumOS](https://heliumos.org) too, I tested it on HeliumOS.
+This also applies to
+- [Fedora CoreOS](https://fedoraproject.org/coreos/)
+- [Fedora IoT](https://fedoraproject.org/iot/)
+- [uBlue](https://universal-blue.org) [Bazzite](https://bazzite.gg), [Bluefin](https://projectbluefin.io/), [Aurora](https://getaurora.dev/)
+- [Secureblue](https://github.com/secureblue/secureblue)
+- [CentOS Bootc](https://gitlab.com/redhat/centos-stream/containers/bootc)
+- [HeliumOS](https://heliumos.org)
+- [RHEL Image mode](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/image-mode)
 
 First add the repo file manually, then install it, which will result in a reboot.
 
 ```
-curl --tlsv1.3 -fsS https://repository.mullvad.net/rpm/stable/mullvad.repo | pkexec tee /etc/yum.repos.d/mullvad.repo
+curl --tlsv1.3 -fsS https://repository.mullvad.net/rpm/stable/mullvad.repo | sudo tee /etc/yum.repos.d/mullvad.repo
 
 # install it
 rpm-ostree update --install mullvad-vpn --reboot
@@ -16,12 +24,12 @@ rpm-ostree update --install mullvad-vpn --reboot
 after reboot, to make it work
 
 ```
-sudo systemctl enable --now mullvad-daemon.service
-sudo systemctl enable --now mullvad-early-boot-blocking.service
+systemctl enable --now mullvad-daemon.service
+systemctl enable --now mullvad-early-boot-blocking.service
 ```
 
-## Automatic Starting
-If you want to setup automatic starting of the VPN without launching the GUI app all the time:
+## Automatic Starting without GUI
+If you want to setup automatic starting of the VPN **without launching the GUI app** all the time:
 
 ```
 wget https://github.com/boredsquirrel/MullvadVPN-Tricks/raw/refs/heads/main/create-autostart-service.sh
@@ -36,7 +44,7 @@ wget -O ~/.local/share/applications/ https://github.com/boredsquirrel/MullvadVPN
 
 ## Autostart apps only when the VPN is on
 
-If you want to start applications on boot, but it is **really, really bad** if they start with no VPN on (for example a Torrent program, not that we use it for anything illegal), you can use this script instead of launching the app manually:
+If you want to start applications on boot, but it is ***really, really bad*** if they start with no VPN on (for example a Torrent program, not that we use it for anything illegal), you can use this script instead of launching the app manually:
 
 ```
 mkdir ~/.local/bin
@@ -52,7 +60,7 @@ wget https://github.com/boredsquirrel/MullvadVPN-Tricks/raw/refs/heads/main/mull
 update-desktop-database
 ```
 
-Now you can select this "App" to autostart, and in the script you can enter the start commands of the apps you want to start, ***if*** the VPN is connected.
+Now you can select this "App" to autostart, and in the script you can change the start commands of the apps you want to start, ***if*** the VPN is connected.
 
 ## Kill Apps if VPN is off
 You may want to use an additional security to kill certain apps if the VPN is not connected or blocking the connection.
